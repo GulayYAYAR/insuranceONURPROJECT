@@ -240,15 +240,32 @@ public class InsurancePage extends BrowserUtils {
     public void setMonthlyPayment$() {
         staticWait(1);
         String [] monthly1 = monthlyPayment$.getText().split("\\$");
-        monthlyFinal = monthly1[1];
+        String[] monthly2;
+        if(monthly1[1].contains(",")){
+            monthly2 = monthly1[1].split(",");
+            monthlyFinal = monthly2[0]+monthly2[1];
+        }else {
+            monthly2=monthly1;
+            monthlyFinal = monthly2[1];
+        }
+
         System.out.println("Monthly payment is: "+Double.parseDouble(monthlyFinal));
     }
 
     public void setAnnualAll() {
+        staticWait(1);
         String [] annual1 = annualAll.getText().split(" ");
         String [] annual2 = annual1[0].split("\\$");
-        String [] annual3 = annual2[1].split(",");
-        annualFinal = annual3[0]+annual3[1];
+        String [] annual3;
+        if (annual2[1].contains(",")){
+            annual3 = annual2[1].split(",");
+            annualFinal = annual3[0]+annual3[1];
+        }else{
+            annual3 =annual2;
+            annualFinal = annual3[1];
+        }
+
+
         System.out.println("Annual payment is: "+Double.parseDouble(annualFinal));
 
         if (Double.parseDouble(annualFinal)/12==Double.parseDouble(monthlyFinal)){
